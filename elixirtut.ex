@@ -22,11 +22,97 @@ defmodule M do
 
     # do_pattern_matching()
 
-    do_anonymous_fn()
+    # do_anonymous_fn()
+
+    # do_recursion()
+
+    # do_looping()
+
+    # do_enumerable()
+
+    do_list_comprehensions()
+  end
+
+  def do_list_comprehensions do
+    dbl_list = for n <- [ 1, 2, 3 ], do: n * 2
+    IO.inspect( dbl_list )
+
+    even_list = for n <- [ 1, 2, 3, 4 ], rem( n, 2 ) == 0, do: n
+    IO.inspect( even_list )
+  end
+
+  def do_enumerable do
+
+    IO.puts "Even list: #{ Enum.any?( [ 1, 2, 3 ],
+      fn( n ) -> rem( n, 2 ) == 0 end ) }"
+
+    Enum.each( [ 1, 2, 3 ], fn( n ) -> IO.puts n end )
+
+    dbl_list = Enum.map( [ 1, 2, 3 ], fn ( n ) -> n * 2 end )
+
+    IO.inspect( dbl_list )
+
+    sum_vals = Enum.reduce( [ 1, 2, 3 ], fn( n, sum ) -> n + sum end )
+
+    IO.puts sum_vals
+
+    IO.inspect Enum.uniq( [ 1, 2, 2 ] )
+
+  end
+
+  def do_looping do
+    IO.puts "Sum: #{ sum( [ 1, 2, 3, ] ) }"
+
+    loop( 5, 1 )
+  end
+
+  def sum( [] ), do: 0
+  def sum( [ head | tail ] ), do: head + sum( tail )
+
+  def loop( 0, _ ), do: nil
+  def loop( max, min ) do
+    if max < min do
+      loop( 0, min )
+    else
+      IO.puts "Num : #{ max }"
+      loop( max - 1, min )
+    end
+  end
+
+  def do_recursion() do
+    IO.puts "Factorial of 4: #{ factorial( 4 ) }"
+  end
+
+  def factorial( num ) do
+    if num <= 1 do
+      1
+    else
+      num * factorial( num - 1 )
+    end
   end
 
   def do_anonymous_fn do
+    get_sum = fn ( x, y ) -> x + y end
 
+    IO.puts "5 + 5 = #{ get_sum.( 5, 5 ) }"
+
+    get_less = &( &1 - &2 )
+
+    IO.puts "7 - 6 = #{ get_less.( 7, 6 ) }"
+
+    add_sum = fn
+      { x, y } -> IO.puts "#{ x } + #{ y } = #{ x + y }"
+      { x, y, z } -> IO.puts "#{ x } + #{ y } + #{ z } = #{ x + y + z }"
+    end
+
+    add_sum.( { 1, 2 } )
+    add_sum.( { 1, 2, 3 } )
+
+    IO.puts do_it()
+  end
+
+  def do_it( x \\ 1, y \\ 1 ) do
+    x + y
   end
 
   def do_pattern_matching do
