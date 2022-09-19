@@ -8,9 +8,154 @@ defmodule M do
 
     # do_stuff()
 
-    #do_math()
+    # do_math()
 
-    do_compare()
+    # do_compare()
+
+    # do_control()
+
+    # do_tuple()
+
+    # do_list()
+
+    # do_map()
+
+    # do_pattern_matching()
+
+    do_anonymous_fn()
+  end
+
+  def do_anonymous_fn do
+
+  end
+
+  def do_pattern_matching do
+    [ length, width ] = [ 20, 30 ]
+
+    IO.puts "Width: #{ width }"
+
+    [ _, [ _, a ] ] = [ 20, [ 30, 40 ] ]
+
+    IO.puts "Get num: #{ a }"
+
+  end
+
+  def do_map do
+    capitals = %{
+      "Alabama" => "Montgomery",
+      "Alaska" => "Juneau",
+      "Arizona" => "Phoenix"
+    }
+
+    IO.puts "Capital of Alaska: #{ capitals[ "Alaska" ] }"
+
+    capitals2 = %{
+      alabama: "Montgomery",
+      alaska: "Juneau",
+      arizona: "Phoenix"
+    }
+
+    IO.puts "Capital of Arizona: #{ capitals2.arizona }"
+
+    capitals3 = Dict.put_new( capitals, "Arkansas", "Little Rock" )
+  end
+
+  def do_list do
+    list1 = [ 1, 2, 3 ]
+    list2 = [ 4, 5, 6 ]
+
+    list3 = list1 ++ list2
+
+    list4 = list3 -- list1
+
+    IO.puts 6 in list4
+
+    [ head | tail ] = list3
+
+    IO.puts "Head : #{ head }"
+
+    IO.write "Tail : "
+    IO.inspect tail
+
+    IO.inspect [ 97, 98 ]
+    IO.inspect [ 97, 98 ], charlists: :as_lists
+
+    Enum.each tail, fn item ->
+      IO.puts item
+    end
+
+    words = [ "random", "words", "in", "a", "list" ]
+
+    Enum.each words, fn word ->
+      IO.puts word
+    end
+
+    display_list( words )
+
+    IO.puts display_list( List.delete( words, "random" ) )
+
+    IO.puts display_list( List.insert_at( words, 4, "yeah!" ) )
+
+    my_stats = [ name: "Derek", height: 6.25 ]
+  end
+
+  def display_list( [ word | words ] ) do
+    IO.puts word
+    display_list( words )
+  end
+  def display_list( [] ), do: nil
+
+  def do_tuple do
+    my_stats = { 175, 6.25, :Derek }
+
+    IO.puts "Tuple #{ is_tuple( my_stats ) }"
+
+    my_stats2 = Tuple.append( my_stats, 42 )
+
+    IO.puts "Age #{ elem( my_stats2, 3 ) }"
+
+    IO.puts "Size #{ tuple_size( my_stats2 ) }"
+
+    my_stats3 = Tuple.delete_at( my_stats2, 0 )
+
+    my_stats4 = Tuple.insert_at( my_stats3, 0, 1974 )
+
+    many_zeroes = Tuple.duplicate( 0, 5 )
+
+    { weight, height, name } = { 175, 6.25, "Derek" }
+    IO.puts "Weight : #{ weight }"
+  end
+
+  def do_control do
+    age = 16
+
+    if age >= 18 do
+      IO.puts "Can vote"
+    else
+      IO.puts "Can't vote"
+    end
+
+    unless age === 18 do
+      IO.puts "You're not 18"
+    else
+      IO.puts "You are 18 "
+    end
+
+    cond do
+      age >= 18 -> IO.puts "You can vote"
+      age >= 16 -> IO.puts "You can drive"
+      age >= 14 -> IO.puts "You can wait"
+      true -> IO.puts "Default"
+    end
+
+    case 2 do
+      1 -> IO.puts "Entered 1"
+      2 -> IO.puts "Entered 2"
+      _ -> IO.puts "Default"
+    end
+
+    IO.puts "Ternary: #{if age > 18, do: "Can Vote", else: "Can't vote"}"
+
   end
 
   def do_compare do
